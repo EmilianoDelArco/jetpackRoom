@@ -22,36 +22,39 @@ import com.example.jetpackroom.db.Todo
 import java.text.SimpleDateFormat
 import java.util.*
 
+// Composable que representa un elemento visual para mostrar información de una tarea (Todo).
 @Composable
 fun TodoItem(
     todo: Todo,
+    // Parámetro opcional para manejar el evento de clic en el botón de edición.
     onEditClick: (todo: Todo) -> Unit = {},
+    // Parámetro opcional para manejar el evento de clic en el botón de eliminación.
     onClick: (todo: Todo) -> Unit = {}
 ) {
+    // Formato de fecha para mostrar la fecha de creación de la tarea.
     val sdf = SimpleDateFormat("dd/MM/yyyy HH:mm:ss", Locale.JAPAN)
 
+    // Columna que contiene la estructura visual de la tarea.
     Column(
         modifier = Modifier
             .fillMaxWidth()
-            .border(
-                BorderStroke(2.dp, Color.Blue))
+            .border(BorderStroke(2.dp, Color.Blue))
             .padding(32.dp)
-
     ) {
+        // Fila que contiene el título de la tarea y los iconos de edición y eliminación.
         Row(
             modifier = Modifier.fillMaxWidth(),
-
             horizontalArrangement = Arrangement.SpaceBetween,
             verticalAlignment = Alignment.CenterVertically
         ) {
-            // Texto del título
+            // Texto del título de la tarea.
             Text(
                 text = todo.title,
                 modifier = Modifier.weight(1f)
                     .padding(bottom = 4.dp)
             )
 
-            // Icono de lápiz para editar
+            // Icono de lápiz para editar la tarea.
             Icon(
                 imageVector = Icons.Default.Edit,
                 contentDescription = "Editar",
@@ -59,11 +62,12 @@ fun TodoItem(
                 modifier = Modifier
                     .size(24.dp)
                     .clickable {
+                        // Llama al evento de clic en el botón de edición.
                         onEditClick(todo)
                     }
             )
 
-            // Icono de basura
+            // Icono de basura para eliminar la tarea.
             Icon(
                 imageVector = Icons.Default.Delete,
                 contentDescription = "Eliminar",
@@ -71,18 +75,21 @@ fun TodoItem(
                 modifier = Modifier
                     .size(24.dp)
                     .clickable {
+                        // Llama al evento de clic en el botón de eliminación.
                         onClick(todo)
                     }
             )
         }
 
+        // Texto que muestra la fecha de creación de la tarea.
         Text(
             text = "${stringResource(id = R.string.todo_created_at)} ${sdf.format(todo.created_at)}",
             fontSize = 12.sp,
             textAlign = TextAlign.Right,
             modifier = Modifier.fillMaxWidth()
-
         )
     }
+
+    // Espaciador para separar visualmente los elementos.
     Spacer(modifier = Modifier.height(16.dp))
 }
